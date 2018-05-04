@@ -1,0 +1,30 @@
+\section{Theoretical background}
+
+Over the years there have been many studies on ﬁnding distances within graphs. There have been studies on all-pair-shortest-path (APSP) problem. Studies have been conducted on ﬁnding the shortest and farthest distance between two vertices and studies have been done on ﬁnding diameter and radius in the graph.
+A lot of approximations were found for these problems.
+
+\newline In this article we will try to focus on the following problems
+\begin{itemize}
+    \item Finding a graph diameter and finding approximation to the diameter
+    \item Finding a graph radius and finding approximation to the radius
+    \item Finding the eccentricity of graph and finding approximation to the eccentricity of a graph
+\end{itemize}
+We will also try to find lower bounds for thos problems.
+\newline\newline Let $G=(V,E)$ be directed or undirected graph with or witout wieght, where $V$ represent the vertcies and $E$ represent the edges of the graph we say $|V|=n$ and $|E|=m$ where $m =O(n^2)$.
+We will use $d(u,v)$ to define the distance betweeen $u$ and $v$ in the graph $G$.
+
+A main question in finding distances in the graphs is finding the diameter of the graph the maximum of the minimum distance between pair of vertices in the graph. The best known algorithm that deals with the problem is the same algoritem that compute the all-pair-shortest-path problem the algoritem finds for each vertex its distance from all the graph vertices using bfs algoritem and then cumpote the maximum distance this algoritem takes $\mathcal{O}(n*(m+n))=\mathcal{O}(n^3)$.
+
+In many algorithms, in order to improve running time, we use the following tools:
+\begin{itemize}
+    \item \textbf{Approximation} we use approximation of the original problem with provable guarantees on the distance of the returned solution to the optimal one in order to get better run time.
+    \item  \textbf{Randomized} we use randomness as part of the algoritme. there two main Randomized technique "Monte Carlo algorithm" whose output may be incorrect with a certain probability, and "Las Vegas algorithm" whose runtime may be bigger with a certain probability.
+\end{itemize}
+
+In an article by Aingworth and Chekuri [] they brought an ramdomize algorithm that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 4 in $\mathcal{O}(m \sqrt{n\log n})$ time. Using that algoritem they show algorithem that estimate $\hat{D}$ for the diameter $D$, such that $\floor{2/3D} \leq \hat{D} \leq D$ in $\mathcal{\tilde{O}}(m\sqrt{n}+n^2)$ time. Aingworth and Chekuri also give a open question is there any algotritme that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 3 in less then $\mathcal{O}(mn)$ time.
+
+Liam and Virgina [] show in there artical how they can improve Aingworth and Chekuri algorithem and get diameter approximation of nearly 2/3 in $\mathcal{\tilde{O}}(m\sqrt{n})$ time.
+They also show a rudiction form the K-Dominaing-Set problem to prove that no algoritem can distinghs between graph with diameter 2 and graph with diameter 3 in less then $\mathcal{O}(n^2)$ time.
+Liam and Virgina use the algoritem for All-Pair-Almost-Shortest-Path of Dor, Halperin and Zwick [] that compute all distance in grpah $G$ with an additive error $k$ in $\mathcal{\tilde{O}}(min{n^2})$
+
+They also show a new algoritem for dense undirected unweighted graph (dense graph is a graph in which the number of edges is close to $O(n^2)$).    
