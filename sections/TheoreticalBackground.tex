@@ -9,7 +9,7 @@ A lot of approximations were found for these problems.
     \item Finding a graph radius and finding approximation to the radius
     \item Finding the eccentricity of graph and finding approximation to the eccentricity of a graph
 \end{itemize}
-We will also try to find lower bounds for thos problems.
+We will also try to find lower bounds for those problems.
 \newline\newline Let $G=(V,E)$ be directed or undirected graph with or witout wieght, where $V$ represent the vertcies and $E$ represent the edges of the graph we say $|V|=n$ and $|E|=m$ where $m =O(n^2)$.
 We will use $d(u,v)$ to define the distance betweeen $u$ and $v$ in the graph $G$.
 
@@ -21,10 +21,32 @@ In many algorithms, in order to improve running time, we use the following tools
     \item  \textbf{Randomized} we use randomness as part of the algoritme. there two main Randomized technique "Monte Carlo algorithm" whose output may be incorrect with a certain probability, and "Las Vegas algorithm" whose runtime may be bigger with a certain probability.
 \end{itemize}
 
-In an article by Aingworth and Chekuri [] they brought an ramdomize algorithm that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 4 in $\mathcal{O}(m \sqrt{n\log n})$ time. Using that algoritem they show algorithem that estimate $\hat{D}$ for the diameter $D$, such that $\floor{2/3D} \leq \hat{D} \leq D$ in $\mathcal{\tilde{O}}(m\sqrt{n}+n^2)$ time. Aingworth and Chekuri also give a open question is there any algotritme that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 3 in less then $\mathcal{O}(mn)$ time.
+In an article by Aingworth and Chekuri
+\cite{siam1999} they brought an ramdomize algorithm that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 4 in $\mathcal{O}(m \sqrt{n\log n})$ time.
+Using that algoritem they show algorithem that estimate $\hat{D}$ for the diameter $D$, such that $\floor{2/3D} \leq \hat{D} \leq D$ in $\mathcal{\tilde{O}}(m\sqrt{n}+n^2)$ time. Aingworth and Chekuri also give a open question is there any algotritme that can distinguish between a graph with a diameter of 2 and a graph with a diameter of 3 in less then $\mathcal{O}(mn)$ time.
 
-Liam and Virgina [] show in there artical how they can improve Aingworth and Chekuri algorithem and get diameter approximation of nearly 2/3 in $\mathcal{\tilde{O}}(m\sqrt{n})$ time.
-They also show a rudiction form the K-Dominaing-Set problem to prove that no algoritem can distinghs between graph with diameter 2 and graph with diameter 3 in less then $\mathcal{O}(n^2)$ time.
-Liam and Virgina use the algoritem for All-Pair-Almost-Shortest-Path of Dor, Halperin and Zwick [] that compute all distance in grpah $G$ with an additive error $k$ in $\mathcal{\tilde{O}}(min{n^2})$
+Liam and Virgina \cite{LV2013} show in there artical how they can improve Aingworth and Chekuri algorithem and get diameter approximation of nearly 2/3 in $\mathcal{\tilde{O}}(m\sqrt{n})$ time.
+By adding node sampling to Aingworth and Chekuri they get ride from the $\mathcal{O}(n^2)$ time.
+They also show a rudiction form the K-Dominaing-Set problem to prove that under the Strong Exponential Time
+Hypothesis (SETH) no algoritem can distinghs between graph with diameter 2 and graph with diameter 3 in less then $\mathcal{O}(n^{2-\epsilon})$ time.
+Liam and Virgina also use the algoritem of Dor, Halperin and Zwick \cite{DHZ2000} All-Pair-Almost-Shortest-Path that compute all distance in grpah $G$ with an additive error $k$ in $\mathcal{\tilde{O}}(min\{n^{2-\frac{2}{k+2}}m^{\frac{2}{k+2}},n^{2+\frac{2}{3k-2}}\})$ time.
 
-They also show a new algoritem for dense undirected unweighted graph (dense graph is a graph in which the number of edges is close to $O(n^2)$).    
+They also show a new algoritem for dense undirected unweighted graph (dense graph is a graph in which the number of edges is close to $O(n^2)$) that give estimate $\hat{D}$ for the diameter $D$ such that $4/5 \leq \hat{D} \leq D$ in $\mathcal{\tilde{O}}(m^{2/3}n^{4/3})$ time.    
+After the article of Lian and Virginia, Shiri, Daniel, Liam, Grant, Robert and Virginia 
+Show in \cite{SDLLGREV2000} two deterministic algoritems for the diameter with 2/3 approximation one with $\mathcal{\tilde{O}}(m^{3/2})$ time and the other $\mathcal{\tilde{O}}(mn^{2/3})$ time.
+Those two algoritme are the first deterministic algoritems that run in subqaudratic time and give $(2-\epsilon)$-approximation.
+
+Another fundamental set of graph parameters are the Eccentricities, i.e. the largest distance from each vertex. 
+Liam and Virginia show in \cite{LV2013} algorithem that when the diameter and the radius are $D,r$ Respectively. For every $u \in V$ estimate $\hat{e(u)}$ such that $max\{r,2/3ecc(u)\} \leq \hat{e(u)} \leq min\{D,3/2ecc(u)\}$ in $\mathcal{\tilde{O}}(m\sqrt{n})$.
+
+
+Shiri, Daniel, Liam, Grant, Robert and Virginia 
+Show in \cite{SDLLGREV2000} that a varinet of Liam and Virginia algoritem \cite{LV2013} can give better approximation with the same running time, they show approximation of $3/5e(u)\leq \hat{e(u)} \leq e(u)$.
+
+
+
+
+Abboud, Virginiam and Joshua \cite{AVJ2016} used in Orthogonal Vectors Conjecture to proof that no $\mathcal{O}(n^{2-\epsilon})$ algorithm can achieve better than 5/3 approximation.
+
+More recent result were showen by Lincoln, Virginia and Rayen \cite{AVR2018} prove that under a the complexity of weighted Clique, the eccentricity problem cannot be beaten by any polynomial runtime in the form $\mathcal{O}(mn)$
+for $m=O(n^{1+1/k})$ for integer k.
