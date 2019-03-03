@@ -1,0 +1,43 @@
+\section{Diameter}
+We first recall the algorithm of [?]. 
+The algorithm picks a random sample $S$ of vertices such that $|S|=L$, so with high propability for all $v \in V$ $S$ hits the $N_L(v)$. The algoritm computes a Dijkstra search from each $s \in S$. In order to estimate the diameter value, the algorithm runs a binary search over $q=\{1,\dots,Mn\}$. 
+\begin{indentblock}
+Each iteration of the binary search works as follow:
+\newline Let $A$ be a set of all vertices $v \in V$ such that $B_q(v)\cap S = \emptyset$.
+Compute $g_q(u,v)$ for all $(u,v) \in A$.
+\newline If the maximum gap-distance found is at least $2q+2$ that mean the diameter is at least $2q+2$ and increase $q$ else, the diameter is no more than $2q+1$ and decrease $q$.
+\end{indentblock}
+\breakline
+Note that $g_r(a,b) < \infty$ $\Leftrightarrow$ $d(a,b)=g_r(a,b)$ so if we could compute the 'gap-disatnce' with large enouth depth we could find the exact diameter. In order to compute the gap distance to depth of $r$ we need compute $B_r(u)$ for all $u\in V$. This step can cost alot, instead we compute $W_{r,S}(u)$ so, if $W_{r,S}(u)=B_r(u)$ we can compute gap-distance on $u$ to depth $r$ otherwise, we have some $s\in S$ such that $d(u,s)\leq r$ and we guranteed to find distance of at least $ecc(a)-r$.  
+\breakline \breakline
+In order to compute the gap-distance their algorithm do as follow:
+for each $u\in A$ if $|B_q(u)|>t$ run $Dijkstra(u)$ and remove $u$ from all $W(v), v\in A$, then compute gap-distance over $A$. This approach cost $\mathcal{O}(mt^2+mn/t)$. Our main idea is to accomplish this task with better running time.
+\breakline \breakline
+Basswana et al. [?] introduced $(3,2)-$spanner and proved the following Theorem: 
+\begin{theorem}
+Let $S$ be a sample set over $V$ such that we select each vertex from $V$ independently with probablity $p$. It taks $\mathcal{O}(m)$ time to construct a $(3,2)-$spanner of size $\mathcal{O}(n/p)$ such that for each $u\in V$.
+ If $u$ has no neighbor from set $S$ in $G$, then every edge connected to $u$ will be in the spanner. 
+\end{theorem}
+
+Let $G'=(V,\epsilon_E)$ be the spanner from the above theorem union $T_S$, such that $|\epsilon_E|=n+n/p$. %todo change from n/p to np% 
+
+\begin{lemma} 
+For each  $x,y \in V$ and $q,r$ a nonnegative integer, if $W_{q,S}(x)\cap W_{r,S}(y) \not = \emptyset$ then the shortest path between $x$ and $y$ will be in the spanner. 
+\end{lemma}
+
+\begin{proof}
+ Let $h$ be a vertex on the shortest path such that $h\in W_{q,S}(x)$ and $h\in W_{r,S}(y)$. \breakline
+Let $u_x$ be the first vertex on the sortest path from $x$ to $y$ that have neighbor to $S$. We must have that $u_x=h$ or $(u_x,h)\in E$ otherwise, $h$ can't be in $W_{q,S}(x)$ because there is closer $s\in S$ to $x$ than $h$. If $u_x \not = h$ then $h\in S$ and the sortest path between $h$ and $x,y$ preversed in $\epsilon_E$ (the same for $y$), otherwise $u_x=h=u_y$ and by theorem[?] the path in $\epsilon_E$. 
+\end{proof}
+
+
+\begin{lemma}
+If $d(x,y)\leq q+r$ then, $d_{G'}(x,y)=d(x,y)$.
+\end{lemma}
+
+\begin{proof}
+From leamma[?] we get that if $W_{q,S}(x)\cap W_{r,S}(y) \not = \emptyset$ then $d(x,y)=d_{G'}(x,y)$ and because $d(x,y)\leq q+r$ we must have $W_{q,S}(x)\cap W_{r,S}(y) \not = \emptyset$.
+\end{proof}
+
+\breakline
+In our new approach we compute the gap-distance by runing $APSP$ over $G'$ 

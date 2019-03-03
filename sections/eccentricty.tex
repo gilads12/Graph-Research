@@ -1,0 +1,12 @@
+
+\begin{algorithm}[ht]
+  \caption{eccentricity\label{alg}}
+   Let $A$ be a random sample  of $\Theta(C * \log n)$ nodes.\\
+   \ForEach{$u \in A $ }{%
+   $BFS(u)$.
+   }
+   \ForEach{$v \in V$ }{%
+   $\hat{e(v)}=\max_{u\in A}\{d(u,v),e(u)-d(u,v)\}$
+   }
+\end{algorithm}
+\textbf{lemma} leat $u,v\in V$ such $d(u,v)$ is the maximum distance 

@@ -1,0 +1,33 @@
+\section{Preliminaries}
+
+\begin{definition}
+Let $S \subset V$. the distance between $u$ to its closest vertex in $S$ by $d(u,S)$
+\end{definition}
+
+\begin{definition}
+Let $p_S(v)$. the closest vertex from $v$ to set $S$.
+\end{definition}
+
+
+\begin{definition}
+The edge set $T_S $ preserves the shortest path between $u$ and $p_S(u)$ for all $v \in V$.
+\end{definition}
+
+\begin{definition}
+The $L$-nearest set of vertex $v$ is denoted $N_L(v)$ such that $|N_L(v)|=L$.
+\end{definition}
+
+
+\begin{definition}
+The ball of radius $r$ around $v$ is defined as $B_r(v)=\{u: d(v,u)\leq r\}$.
+\end{definition}
+
+\begin{definition}
+The set $W_{r,S}(v)$ is built by adding vertices until the next vertex to be added is belongs to $S$ or is at distance greater than $r$ from $v$.
+\end{definition}
+
+\begin{definition}
+Gap-distance is defined as $g_{q,r}(a,b)=\min_{\substack{(s,t) \in E  \\ s \in B_{q}(x) \\ t \in B_{r}(y) }} d(x,s)+w(s,t)+d(t,y)$
+\end{definition}
+
+

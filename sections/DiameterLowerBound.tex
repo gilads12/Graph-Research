@@ -1,0 +1,112 @@
+
+\begin{definition}
+$Q_G=\{u,v\in V\mid d(u,v)=3 \}$
+\end{definition}
+\begin{definition}
+$L_i(v)=\{u \in V\mid d(u,v)=i \}$
+\end{definition}
+
+
+
+\RestyleAlgo{boxruled}
+\LinesNumbered
+\begin{algorithm}[ht]
+  \caption{\label{alg}}
+  Find $w$ s.t. $ecc(w)=2$ and compute $bfs$ over $w$\;
+  Let $T=L_2(w)$, $B=\emptyset$\;
+   \While{$T \not = \emptyset$}{
+   Let $S$ be a sampling set of $T$ s.t. $|S|=|T|/2$\;
+   Create graph $G'$ by adding to $G$ edges from $w$ to all $v \in S\cup B$\;
+   \If { $Diameter(G')=2$}{%
+   $T=S$}
+   \Else{
+   $B=B\cup Find-Suspect(G',w,T-S)$
+  }
+   }
+   \ForEach{$v \in B$}{%
+   compute $bfs$ over $v$
+   }
+\end{algorithm}
+
+\RestyleAlgo{boxruled}
+\LinesNumbered
+\begin{algorithm}[ht]
+  \caption{Find Suspect ({$G,w,S$})\label{alg}}
+     Let $K=\emptyset$\;
+     \While{$|S|\not = 1$}{
+     Divide $S$ into two sets with equal size $P,R$\;
+     Create graph $G'$ by adding to $G$ edges from $w$ to all $v \in K\cup P$\;
+   \If { $Diameter(G')=2$}{%
+      $S=R$\;
+      $K=K\cup P$\; 
+      }
+      \Else {
+            $S=P$\;
+            $K=K\cup R$\;
+      }
+   }
+   Return $S$\;
+\end{algorithm}
+
+\begin{theorem}
+Let $G$ be a graph with maximum distance of $3$ and let $w$ be a vertex in $G$ with eccentricity of 2. For any $u,v \in V$ s.t. $d(u,v)=3$  either $u \in L_2(w)$ or $v \in L_2(w)$ or both.
+\end{theorem}
+\begin{proof}
+If $u,v \in L_1(w)$ we get $d(v,u)\leq d(v,w)+d(w,u)=2$ so in order to get distance $3$ we must have that $u$ or $v$ in $L_2(w)$
+\end{proof}
+
+Straight forward result is that $\forall a \in Q_G$ there is $b \in Q_G\cap L_2(w)$ s.t. $d(a,b)=3$. So it is enough to compute $bfs$ over $Q_G\cap L_2(w)$ in order to find all pairs $u,v \in V$ s.t. $d(u,v)=3$.
+
+\begin{theorem}
+Let $S$ be a random sampling set from $L_2(w)$ and let
+$G'$  be the graph that created by adding to $G$ edges from $w$ to all $v \in S$ we must have that; For any $v\in L_2(w) Q_G\cap L_2(w) \mid v \not \in S$ the eccentricity of $v$ in $G'$ is $3$.
+\end{theorem}
+
+\begin{proof}
+ Let $v$ be a vertex s.t. $ecc_{G}(v)=3$ and $ecc_{G'}(v)=2$ and let $u$ be the furthest vertex from $v$ in $G$.
+ The only way that the distance between $v$ to $u$  has changed in $G'$ is by using at least one edge that was added in $G'$ let's call this edge $(w,s')$ it can be that $s'=u$ but because $v\not \in S$ we have that $d(v,w)=2$ so
+ we get that $d(v,u) = d(v,w)+d(w,s')+d(s',u)\leq 2+1$.
+ An corollary result is that if the diameter of $G'$ is $2$ we get  $Q_G\cap L_2(w) \subset S$.
+\end{proof}
+
+
+\begin{theorem}
+Suppose distinguishing between diameter of $2$ or $3$ can be done in time $\mathcal{O}T(n)$. Then the All-Pair-Shortest-Path for graph maximum distance $3$ can be solved in $\mathcal{O}(\ell T(n)+\ell m+T(n))$ time, where $\ell$ is the size of $|Q_G|$. 
+\end{theorem}
+
+\begin{proof}
+ The algorithm above solve the $APSP$  by using an algorithm that can distinguish between diameter 2 and diameter 3.
+ Find-Suspect run a  binary search over a set $S$ 
+ until we found vertex $v \in Q_G$. The algorithm calla to 'find-suspect' at most $|Q_G|$ times. For each $b \in B$ so the total running time is $\mathcal{O}(\ell T(n)+\ell m+T(n))$.
+ 
+\end{proof}
+
+\begin{theorem}
+Given a $T(n)$ subcubic algorithm for distinguish between graphs of diameter 2 and 3. Then, the Boolean-Matrix-Multiplication can be solved in a subcubic time.
+\end{theorem}
+
+\begin{proof}
+ Let $A$ and $B$ be $n \times n$ matrices over $\{0, 1\}$ the algorithm set up a tripartite graph $G$ with parts $S1$, $S2$ and $S3$, each containing $n$ nodes. The edge relation for $S1 \times S2$ is defined by $A$, and the edge relation for $S2 \times S3$ is defined by $B$. Each node from $S1$, $S2$ has edge to vertex $a$ and each node from $S2$, $S3$ has edge to vertex $b$. A path of length two from $i \in S1$ to $j \in S3$ corresponds to a $1$ in the entry $(A · B)[i, j]$.
+ 
+Next, the algorithm continue by partitioning each set $S1$, $S2$,$S3$ into $n^a$ parts where each part has at most
+$n^{1 - a}$ nodes each. It iterates through all $n^{3a}$  possible ways to choose a triple of parts $(S1',S2',S3')$.
+For each triple $(S1',S2',S3')$ in turn, it considers the subgraph $G'$ induced by $S1' \cup S2' \cup S3'\cup a \cup b$ and use the algorithm that was mention in the previous theorem  to find all $i\in S1'$, $j\in S3'$ s.t. $d(i,j)=2$.
+%For each such $u,v \in G' \mid d(u,v)=3$ the algorithm put $0$ in the output matrix $C$ in $[u,v]$. Once we found $u,v$ with path of length three we add an edge between $u$ to $v$ in $G$.
+
+For a triple of parts $(S1',S2',S3')$ let $\ell_{S1',S2',S3'}$  be the number
+of pairs $u,v$ in $G'$ s.t. $d(u,v)=3$. 
+Then, the run time of the algorithm is:
+\[
+\sum_{\textrm{all possible triples}} (\ell_{S1',S2',S3'} T(n^{1-a})+\ell_{S1',S2',S3'} n^{2(1-a)}+T(n^{1-a})) 
+\]
+
+%Note that the sum of all $\ell_{S1',S2',S3'}$ is at most $n^2$, since if $u,v$ is reported to be with path of length three, then it is change to one by adding edge from $u$ to $v$. The algorithm that find the diameter must take at least $m$ time so we get $T(n^{1-a})\geq n^{2(1-a)}$  
+
+%\begin{multline*}
+%\sum_{\textrm{all possible triples}} (\ell_{S1',S2',S3'} %T(n^{1-a})+\ell_{S1',S2',S3'} n^{2(1-a)}+T(n^{1-a})) \leq\\ \sum_{\textrm{all possible triples}} (\ell_{S1',S2',S3'} T(n^{1-a})+T(n^{1-a})) = T(n^{1-a})\sum_{\textrm{all possible triples}} (\ell_{S1',S2',S3'}+1)\\
+%\leq   T(n^{1-a})(n^2+n^{3a}) \\
+%\end{multline*}
+%Since we assume that $T(n)$ is a subcubic algorithm we know $T(n^{1-a})<<n^{3(1-a)}$.
+%Let $a=n^{2/3}$ and we get $T(n^{1/3})n^2<<n^3$ running time.
+\end{proof}
+

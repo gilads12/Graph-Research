@@ -1,18 +1,20 @@
 \input{sections/preamble} 
+\setcitestyle{square}
+
 \lhead{}
 \rhead{Bar Ilan University}
 
-
 \begin{document}
-\input{sections/coverpage}
-\thispagestyle{empty} 
-\tableofcontents
+\input{sections/coverpage.tex}
 \newpage
-\input{sections/TheoreticalBackground}
+\input{sections/Contents.tex}
 \newpage
-\input{sections/Objectives}
+\input{sections/TheoreticalBackground.tex}
+\newpage
+\input{sections/Objectives.tex}
+\newpage
+\input{sections/ResearchPlan.tex}
 \newpage
 \bibliographystyle{unsrt}
-\bibliography{references/biblio}
-
+\bibliography{references/biblio.bib}
 \end{document}
